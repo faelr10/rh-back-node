@@ -12,3 +12,7 @@ export type IProfile = {
 export interface IProfileController {
     registerAdmin(params: RegisterAdminParams): Promise<IProfile>
 }
+
+export interface IProfileService {
+    registerAdmin(params: RegisterAdminParams): Promise<IProfile>
+}
