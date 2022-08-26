@@ -13,7 +13,7 @@ datasource db {
 model Profile {
   id           String   @id @default(uuid())
   name         String
-  email        String
+  email        String   @unique
   admin        Boolean
   passwordHash String
   createdAt    DateTime @default(now())
