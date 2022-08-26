@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ProfileModule } from './profiles/profile.module';
+import { ProfileModule } from './modules/profiles/profile.module';
 
 @Module({
   imports: [ProfileModule],
