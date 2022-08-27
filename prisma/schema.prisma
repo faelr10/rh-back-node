@@ -21,3 +21,14 @@ model Profile {
 
   @@map("profile")
 }
+
+model Vacancies {
+  id         String   @id @default(uuid())
+  title      String
+  quantity   Int
+  department String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("vacancies")
+}
