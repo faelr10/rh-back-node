@@ -32,7 +32,7 @@ export class AuthService implements IAuthService {
     const token = jwt.sign(
       {
         id: verifyEmail.id,
-        admin: verifyEmail.admin,
+        permission: verifyEmail.permission,
       },
       privateKey,
       {
