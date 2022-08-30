@@ -1,12 +1,5 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Inject,
-  Param,
-  Post,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
+import { Roles } from 'src/middlewares/auth.guard';
 import { CreateVacancyDto } from './dto/create-vacancy.dto';
 import { FindAllVacanciesByDepartmentParams } from './models/vacancies-params';
 import { VacanciesService } from './vacancies.service';
@@ -23,6 +16,7 @@ export class VacanciesController implements IVacanciesController {
   ) {}
 
   @Post()
+  @Roles('Admin')
   createVacancy(@Body() params: CreateVacancyDto): Promise<IVacancy> {
     return this.service.createVacancy(params);
   }
