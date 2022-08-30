@@ -1,5 +1,5 @@
 ## RH-Back-Node
-Sistema desenvolvido para gerenciamento vagas de emprego disponíveis.
+System developed to manage available job vacancies.
 
 ## Installation
 
