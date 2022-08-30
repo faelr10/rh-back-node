@@ -1,4 +1,5 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { Roles } from 'src/middlewares/auth.guard';
 import { ProfileRegisterAdminDTO } from './dto/profile-register.dto';
 import { ProfileService } from './profiles.service';
 import {
@@ -14,6 +15,7 @@ export class ProfileController implements IProfileController {
   ) {}
 
   @Post()
+  @Roles('Admin')
   registerAdmin(@Body() params: ProfileRegisterAdminDTO): Promise<IProfile> {
     return this.profileService.registerAdmin(params);
   }

@@ -11,7 +11,7 @@ export class ProfileRepository implements IProfileRepository {
     return this.prisma.profile.create({
       data: {
         ...params,
-        admin: true,
+        permission: 'Admin',
       },
     });
   }

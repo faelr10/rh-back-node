@@ -8,7 +8,7 @@ export type IProfile = {
   id: string;
   name: string;
   email: string;
-  admin: boolean;
+  permission: string;
   passwordHash?: string;
   createdAt: Date;
   updatedAt: Date;
