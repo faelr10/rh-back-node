@@ -34,4 +34,10 @@ export class ProfileRepository implements IProfileRepository {
       },
     });
   }
+
+  exists(where: any): Promise<any> {
+    return this.prisma.profile.findFirst({
+      where,
+    });
+  }
 }

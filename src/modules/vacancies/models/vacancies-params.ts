@@ -7,3 +7,8 @@ export type CreateVacancyParams = {
 export type FindAllVacanciesByDepartmentParams = {
   department: string;
 };
+
+export type ApplyVacancyParams = {
+  vacancy_id: string;
+  profile_id: string;
+};
