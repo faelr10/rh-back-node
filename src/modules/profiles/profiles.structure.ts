@@ -1,7 +1,6 @@
-import { ProfileRegisterAdminDTO } from './dto/profile-register.dto';
 import {
-  RegisterAdminRepositoryParams,
-  RegisterAdminServiceParams,
+  RegisterProfileRepositoryParams,
+  RegisterProfileServiceParams,
 } from './models/profile-params';
 
 export type IProfile = {
@@ -15,14 +14,21 @@ export type IProfile = {
 };
 
 export interface IProfileController {
-  registerAdmin(params: RegisterAdminServiceParams): Promise<IProfile>;
+  registerAdmin(params: RegisterProfileServiceParams): Promise<IProfile>;
+  registerCandidates(params: RegisterProfileServiceParams): Promise<IProfile>;
 }
 
 export interface IProfileService {
-  registerAdmin(params: RegisterAdminServiceParams): Promise<IProfile>;
+  registerAdmin(params: RegisterProfileServiceParams): Promise<IProfile>;
+  registerCandidates(params: RegisterProfileServiceParams): Promise<IProfile>;
 }
 
 export interface IProfileRepository {
-  createProfileAdmin(params: RegisterAdminRepositoryParams): Promise<IProfile>;
+  createProfileAdmin(
+    params: RegisterProfileRepositoryParams,
+  ): Promise<IProfile>;
+  createProfileCandidates(
+    params: RegisterProfileRepositoryParams,
+  ): Promise<IProfile>;
   findProfileEmail(email: string): Promise<IProfile | null>;
 }

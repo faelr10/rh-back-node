@@ -1,5 +1,5 @@
 import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
-import { RegisterAdminServiceParams } from './models/profile-params';
+import { RegisterProfileServiceParams } from './models/profile-params';
 import { ProfileRepository } from './profile.repository';
 import {
   IProfile,
@@ -18,7 +18,7 @@ export class ProfileService implements IProfileService {
     @Inject(Hash) private readonly hash: IHash,
   ) {}
 
-  async registerAdmin(params: RegisterAdminServiceParams): Promise<IProfile> {
+  async registerAdmin(params: RegisterProfileServiceParams): Promise<IProfile> {
     const verifyExistUser = await this.repository.findProfileEmail(
       params.email,
     );
@@ -29,6 +29,29 @@ export class ProfileService implements IProfileService {
     try {
       return exclude(
         await this.repository.createProfileAdmin({
+          ...params,
+          passwordHash,
+        }),
+        'passwordHash',
+      );
+    } catch (error) {
+      throw new ForbiddenException(error);
+    }
+  }
+
+  async registerCandidates(
+    params: RegisterProfileServiceParams,
+  ): Promise<IProfile> {
+    const verifyExistUser = await this.repository.findProfileEmail(
+      params.email,
+    );
+    if (verifyExistUser) throw new ForbiddenException('Email already exist!');
+
+    const codePassword = generateCodeRandom(5);
+    const passwordHash = await this.hash.newPasswordHash(codePassword);
+    try {
+      return exclude(
+        await this.repository.createProfileCandidates({
           ...params,
           passwordHash,
         }),

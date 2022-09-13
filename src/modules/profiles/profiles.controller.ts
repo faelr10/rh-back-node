@@ -1,6 +1,6 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
 import { Roles } from 'src/middlewares/auth.guard';
-import { ProfileRegisterAdminDTO } from './dto/profile-register.dto';
+import { ProfileRegisterDTO } from './dto/profile-register.dto';
 import { ProfileService } from './profiles.service';
 import {
   IProfile,
@@ -14,9 +14,14 @@ export class ProfileController implements IProfileController {
     @Inject(ProfileService) private readonly profileService: IProfileService,
   ) {}
 
-  @Post()
+  @Post('admin')
   @Roles('Admin')
-  registerAdmin(@Body() params: ProfileRegisterAdminDTO): Promise<IProfile> {
+  registerAdmin(@Body() params: ProfileRegisterDTO): Promise<IProfile> {
     return this.profileService.registerAdmin(params);
+  }
+
+  @Post('candidates')
+  registerCandidates(@Body() params: ProfileRegisterDTO): Promise<IProfile> {
+    return this.profileService.registerCandidates(params);
   }
 }
