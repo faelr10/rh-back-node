@@ -8,11 +8,14 @@ import {
 } from './profiles.structure';
 import generateCodeRandom from 'src/helpers/generateCodeRandom';
 import exclude from 'src/validations/excludeProperties';
+import { Hash } from 'src/common/hash/hash';
+import { IHash } from 'src/common/hash/structure';
 
 @Injectable()
 export class ProfileService implements IProfileService {
   constructor(
     @Inject(ProfileRepository) private readonly repository: IProfileRepository,
+    @Inject(Hash) private readonly hash: IHash,
   ) {}
 
   async registerAdmin(params: RegisterAdminServiceParams): Promise<IProfile> {
@@ -21,7 +24,8 @@ export class ProfileService implements IProfileService {
     );
     if (verifyExistUser) throw new ForbiddenException('Email already exist!');
 
-    const passwordHash = generateCodeRandom(5);
+    const codePassword = generateCodeRandom(5);
+    const passwordHash = await this.hash.newPasswordHash(codePassword);
     try {
       return exclude(
         await this.repository.createProfileAdmin({

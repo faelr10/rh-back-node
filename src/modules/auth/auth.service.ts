@@ -6,12 +6,15 @@ import { LoginParams } from './models/params';
 import * as bcrypt from 'bcrypt';
 import * as base64 from 'base-64';
 import * as jwt from 'jsonwebtoken';
+import { IHash } from 'src/common/hash/structure';
+import { Hash } from 'src/common/hash/hash';
 
 @Injectable()
 export class AuthService implements IAuthService {
   constructor(
     @Inject(ProfileRepository)
     private readonly profileRepository: IProfileRepository,
+    @Inject(Hash) private readonly hash: IHash,
   ) {}
 
   async login(params: LoginParams): Promise<LoginResponse> {
@@ -20,10 +23,11 @@ export class AuthService implements IAuthService {
     );
     if (!verifyEmail) throw new ForbiddenException('User not found');
 
-    const verifyPassword = await bcrypt.compare(
-      params.password,
-      verifyEmail.passwordHash,
-    );
+    const verifyPassword = await this.hash.comparePassword({
+      currentPassword: verifyEmail.passwordHash,
+      verifyPassword: params.password,
+    });
+
     if (!verifyPassword)
       throw new ForbiddenException('User or password invalid!');
 
