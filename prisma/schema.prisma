@@ -11,24 +11,38 @@ datasource db {
 }
 
 model Profile {
-  id           String   @id @default(uuid())
+  id           String         @id @default(uuid())
   name         String
-  email        String   @unique
+  email        String         @unique
   permission   String
   passwordHash String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  applyVacancy ApplyVacancy[]
 
   @@map("profile")
 }
 
 model Vacancies {
-  id         String   @id @default(uuid())
-  title      String
-  quantity   Int
-  department String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id           String         @id @default(uuid())
+  title        String
+  quantity     Int
+  department   String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  applyVacancy ApplyVacancy[]
 
   @@map("vacancies")
+}
+
+model ApplyVacancy {
+  id         String    @id @default(uuid())
+  vacancy_id String    @db.VarChar(255)
+  vacancies  Vacancies @relation(fields: [vacancy_id], references: [id])
+  profile_id String    @db.VarChar(255)
+  profile    Profile   @relation(fields: [profile_id], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@map("applyVacancy")
 }
