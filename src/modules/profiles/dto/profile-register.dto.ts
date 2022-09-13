@@ -1,5 +1,5 @@
 import { IsEmail, IsString, MinLength } from 'class-validator';
-export class ProfileRegisterAdminDTO {
+export class ProfileRegisterDTO {
   @IsString()
   @MinLength(3)
   readonly name: string;

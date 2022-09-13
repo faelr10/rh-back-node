@@ -1,9 +1,9 @@
-export type RegisterAdminServiceParams = {
+export type RegisterProfileServiceParams = {
   name: string;
   email: string;
 };
 
-export type RegisterAdminRepositoryParams = {
+export type RegisterProfileRepositoryParams = {
   name: string;
   email: string;
   passwordHash: string;
