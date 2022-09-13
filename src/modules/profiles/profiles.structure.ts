@@ -31,4 +31,5 @@ export interface IProfileRepository {
     params: RegisterProfileRepositoryParams,
   ): Promise<IProfile>;
   findProfileEmail(email: string): Promise<IProfile | null>;
+  exists(where: Partial<IProfile> | any): Promise<boolean | IProfile | any>;
 }
